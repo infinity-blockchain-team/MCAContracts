@@ -727,7 +727,7 @@ contract MCAPresale is Ownable {
     uint256 private claimableTokens;
 
     // Address where funds are collected
-    address public wallet = payable(0x09E21BeE436569398C3Aafb16d8C93Fc669DC4Be);
+    address public wallet = payable(0xE262952e1820c6cD1e4AFe6CA6556e3F83d88059);
 
     // How many token units a buyer gets per ETH & USDT
     uint256 public tokenPriceUSD = 2;
