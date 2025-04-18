@@ -1111,7 +1111,7 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
 contract MixedCryptoArts is ERC20, Ownable {
     using SafeMath for uint256;
     uint256 public _transferTax = 4;
-    address public taxWallet = 0xe9662ceB9DB79A43F4454Ee55c9d1B29519844e4;
+    address public taxWallet = 0x426f0be4102a6A1752290a2A0f965d619D792e0a;
     mapping (address => bool) public _isWhiteListedFromFee;
  
 
@@ -1160,6 +1160,14 @@ contract MixedCryptoArts is ERC20, Ownable {
         super._transfer(sender, recipient, transferAmount);
     }
 
+   function changeTaxWallet(address newTaxWallet) public onlyOwner {
+    require(newTaxWallet != address(0), "New tax wallet cannot be zero address");
+    require(newTaxWallet != taxWallet, "New tax wallet must be different from current");
+    _isWhiteListedFromFee[taxWallet] = false; 
+    taxWallet = newTaxWallet;
+    _isWhiteListedFromFee[newTaxWallet] = true; 
+   }
+   
     function whiteListFromFee(address account) public onlyOwner {
         _isWhiteListedFromFee[account] = true;
     }
@@ -1181,11 +1189,4 @@ contract MixedCryptoArts is ERC20, Ownable {
     function burnTokens(uint256 amount) public onlyOwner {
         _burn(msg.sender, amount);
     }
-   function changeTaxWallet(address newTaxWallet) public onlyOwner {
-    require(newTaxWallet != address(0), "New tax wallet cannot be zero address");
-    require(newTaxWallet != taxWallet, "New tax wallet must be different from current");
-    _isWhiteListedFromFee[taxWallet] = false; 
-    taxWallet = newTaxWallet;
-    _isWhiteListedFromFee[newTaxWallet] = true; 
-   }
 }
